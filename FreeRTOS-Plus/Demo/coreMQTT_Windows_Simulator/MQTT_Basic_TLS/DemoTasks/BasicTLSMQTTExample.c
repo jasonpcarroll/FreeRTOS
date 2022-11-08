@@ -182,6 +182,18 @@
 #define mqttexampleTRANSPORT_SEND_RECV_TIMEOUT_MS         ( 200U )
 
 /**
+ * @brief The length of the outgoing publish records array used by the coreMQTT
+ * library to track QoS > 0 packet ACKS for outgoing publishes.
+ */
+#define mqttexampleOUTGOING_PUBLISH_RECORD_LEN            ( 10U )
+
+/**
+ * @brief The length of the incoming publish records array used by the coreMQTT
+ * library to track QoS > 0 packet ACKS for incoming publishes.
+ */
+#define mqttexampleINCOMING_PUBLISH_RECORD_LEN            ( 10U )
+
+/**
  * @brief Milliseconds per second.
  */
 #define MILLISECONDS_PER_SECOND                           ( 1000U )
@@ -311,6 +323,18 @@ static void prvEventCallback( MQTTContext_t * pxMQTTContext,
                               MQTTPacketInfo_t * pxPacketInfo,
                               MQTTDeserializedInfo_t * pxDeserializedInfo );
 
+/**
+ * @brief Call #MQTT_ProcessLoop in a loop for the duration of a timeout or
+ * #MQTT_ProcessLoop returns a failure.
+ *
+ * @param[in] pMqttContext MQTT context pointer.
+ * @param[in] ulTimeoutMs Duration to call #MQTT_ProcessLoop for.
+ *
+ * @return Returns the return value of the last call to #MQTT_ProcessLoop.
+ */
+static MQTTStatus_t prvProcessLoopWithTimeout( MQTTContext_t * pMqttContext,
+                                               uint32_t ulTimeoutMs );
+
 /*-----------------------------------------------------------*/
 
 /**
@@ -371,6 +395,24 @@ static MQTTFixedBuffer_t xBuffer =
     democonfigNETWORK_BUFFER_SIZE
 };
 
+/**
+ * @brief Array to track the outgoing publish records for outgoing publishes
+ * with QoS > 0.
+ *
+ * This is passed into #MQTT_InitStatefulQoS to allow for QoS > 0.
+ *
+ */
+static MQTTPubAckInfo_t pOutgoingPublishRecords[ mqttexampleOUTGOING_PUBLISH_RECORD_LEN ];
+
+/**
+ * @brief Array to track the incoming publish records for incoming publishes
+ * with QoS > 0.
+ *
+ * This is passed into #MQTT_InitStatefulQoS to allow for QoS > 0.
+ *
+ */
+static MQTTPubAckInfo_t pIncomingPublishRecords[ mqttexampleINCOMING_PUBLISH_RECORD_LEN ];
+
 /*-----------------------------------------------------------*/
 
 /*
@@ -390,7 +432,7 @@ void vStartSimpleMQTTDemo( void )
      * state or call the MQTT_ProcessLoop() API function. Using an agent task
      * also enables multiple application tasks to more easily share a single
      * MQTT connection. */
-     xTaskCreate( prvMQTTDemoTask,          /* Function that implements the task. */
+    xTaskCreate( prvMQTTDemoTask,          /* Function that implements the task. */
                  "DemoTask",               /* Text name for the task - only used for debugging. */
                  democonfigDEMO_STACKSIZE, /* Size of stack (in words, not bytes) to allocate for the task. */
                  NULL,                     /* Task parameter - not used in this case. */
@@ -442,6 +484,7 @@ static void prvMQTTDemoTask( void * pvParameters )
         if( xPlatformIsNetworkUp() == pdFALSE )
         {
             LogInfo( ( "Waiting for the network link up event..." ) );
+
             while( xPlatformIsNetworkUp() == pdFALSE )
             {
                 vTaskDelay( pdMS_TO_TICKS( 1000U ) );
@@ -479,7 +522,7 @@ static void prvMQTTDemoTask( void * pvParameters )
          * receiving a publish message before a subscribe ack is zero. Regardless, the
          * application must be prepared to receive any packet. This demo uses the generic packet
          * processing function everywhere to highlight this fact. */
-        xMQTTStatus = MQTT_ProcessLoop( &xMQTTContext, mqttexamplePROCESS_LOOP_TIMEOUT_MS );
+        xMQTTStatus = prvProcessLoopWithTimeout( &xMQTTContext, mqttexamplePROCESS_LOOP_TIMEOUT_MS );
         configASSERT( xMQTTStatus == MQTTSuccess );
 
         /**************************** Publish and Keep-Alive Loop. ******************************/
@@ -493,7 +536,7 @@ static void prvMQTTDemoTask( void * pvParameters )
              * to the same topic, the broker will send the incoming publish message back
              * to the application. */
             LogInfo( ( "Attempt to receive publish message from broker.\r\n" ) );
-            xMQTTStatus = MQTT_ProcessLoop( &xMQTTContext, mqttexamplePROCESS_LOOP_TIMEOUT_MS );
+            xMQTTStatus = prvProcessLoopWithTimeout( &xMQTTContext, mqttexamplePROCESS_LOOP_TIMEOUT_MS );
             configASSERT( xMQTTStatus == MQTTSuccess );
 
             /* Leave connection idle for some time. */
@@ -506,7 +549,7 @@ static void prvMQTTDemoTask( void * pvParameters )
         prvMQTTUnsubscribeFromTopic( &xMQTTContext );
 
         /* Process incoming UNSUBACK packet from the broker. */
-        xMQTTStatus = MQTT_ProcessLoop( &xMQTTContext, mqttexamplePROCESS_LOOP_TIMEOUT_MS );
+        xMQTTStatus = prvProcessLoopWithTimeout( &xMQTTContext, mqttexamplePROCESS_LOOP_TIMEOUT_MS );
         configASSERT( xMQTTStatus == MQTTSuccess );
 
         /**************************** Disconnect. ******************************/
@@ -616,9 +659,16 @@ static void prvCreateMQTTConnectionWithBroker( MQTTContext_t * pxMQTTContext,
     xTransport.pNetworkContext = pxNetworkContext;
     xTransport.send = TLS_FreeRTOS_send;
     xTransport.recv = TLS_FreeRTOS_recv;
-
+    xTransport.writev = NULL;
+    
     /* Initialize MQTT library. */
     xResult = MQTT_Init( pxMQTTContext, &xTransport, prvGetTimeMs, prvEventCallback, &xBuffer );
+    configASSERT( xResult == MQTTSuccess );
+    xResult = MQTT_InitStatefulQoS( pxMQTTContext,
+                                    pOutgoingPublishRecords,
+                                    mqttexampleOUTGOING_PUBLISH_RECORD_LEN,
+                                    pIncomingPublishRecords,
+                                    mqttexampleINCOMING_PUBLISH_RECORD_LEN );
     configASSERT( xResult == MQTTSuccess );
 
     /* Some fields are not used in this demo so start with everything at 0. */
@@ -727,7 +777,7 @@ static void prvMQTTSubscribeWithBackoffRetries( MQTTContext_t * pxMQTTContext )
          * receiving Publish message before subscribe ack is zero; but application
          * must be ready to receive any packet.  This demo uses the generic packet
          * processing function everywhere to highlight this fact. */
-        xResult = MQTT_ProcessLoop( pxMQTTContext, mqttexamplePROCESS_LOOP_TIMEOUT_MS );
+        xResult = prvProcessLoopWithTimeout( pxMQTTContext, mqttexamplePROCESS_LOOP_TIMEOUT_MS );
         configASSERT( xResult == MQTTSuccess );
 
         /* Reset flag before checking suback responses. */
@@ -973,6 +1023,36 @@ static uint32_t prvGetTimeMs( void )
     ulTimeMs = ( uint32_t ) ( ulTimeMs - ulGlobalEntryTimeMs );
 
     return ulTimeMs;
+}
+
+/*-----------------------------------------------------------*/
+
+static MQTTStatus_t prvProcessLoopWithTimeout( MQTTContext_t * pMqttContext,
+                                               uint32_t ulTimeoutMs )
+{
+    uint32_t ulMqttProcessLoopTimeoutTime;
+    uint32_t ulCurrentTime;
+
+    MQTTStatus_t eMqttStatus = MQTTSuccess;
+
+    ulCurrentTime = pMqttContext->getTime();
+    ulMqttProcessLoopTimeoutTime = ulCurrentTime + ulTimeoutMs;
+
+    /* Call MQTT_ProcessLoop multiple times a timeout happens, or
+     * MQTT_ProcessLoop fails. */
+    while( ( ulCurrentTime < ulMqttProcessLoopTimeoutTime ) &&
+           ( eMqttStatus == MQTTSuccess || eMqttStatus == MQTTNeedMoreBytes ) )
+    {
+        eMqttStatus = MQTT_ProcessLoop( pMqttContext );
+        ulCurrentTime = pMqttContext->getTime();
+    }
+
+    if( eMqttStatus == MQTTNeedMoreBytes )
+    {
+        eMqttStatus = MQTTSuccess;
+    }
+
+    return eMqttStatus;
 }
 
 /*-----------------------------------------------------------*/
