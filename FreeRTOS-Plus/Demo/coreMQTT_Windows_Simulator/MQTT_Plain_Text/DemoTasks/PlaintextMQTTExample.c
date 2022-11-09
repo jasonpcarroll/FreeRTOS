@@ -237,6 +237,7 @@ static void prvMQTTDemoTask( void * pvParameters );
  * @return The status of the final connection attempt.
  */
 static PlaintextTransportStatus_t prvConnectToServerWithBackoffRetries( NetworkContext_t * pxNetworkContext );
+
 /**
  * @brief Sends an MQTT Connect packet over the already connected TLS over TCP connection.
  *
@@ -501,7 +502,7 @@ static void prvMQTTDemoTask( void * pvParameters )
          * is reached, or the maximum number of attempts are exhausted. The function returns a failure status
          * if the TCP connection cannot be established with the broker after a configured number
          * of attempts. */
-        xNetworkStatus = prvConnectToServerWithBackoffRetries(&xNetworkContext );
+        xNetworkStatus = prvConnectToServerWithBackoffRetries( &xNetworkContext );
         configASSERT( xNetworkStatus == PLAINTEXT_TRANSPORT_SUCCESS );
 
         /* Send an MQTT CONNECT packet over the established TLS connection,
