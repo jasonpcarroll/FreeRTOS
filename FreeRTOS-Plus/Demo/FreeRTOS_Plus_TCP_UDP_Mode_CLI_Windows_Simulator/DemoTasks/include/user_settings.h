@@ -29,42 +29,14 @@
 
 
 
-/*-- Cipher related definitions  -----------------------------------------------
- *
- *
- *----------------------------------------------------------------------------*/
-  #define WOLFSSL_TLS13
-  #define HAVE_FFDHE_2048
-  #define WC_RSA_PSS
-  #define HAVE_HKDF
+ /* The address of an echo server that will be used by the two demo echo client
+ tasks.
+ http://www.freertos.org/FreeRTOS-Plus/FreeRTOS_Plus_TCP/TCP_Echo_Clients.html
+ http://www.freertos.org/FreeRTOS-Plus/FreeRTOS_Plus_TCP/UDP_Echo_Clients.html */
 
-  
-  #define HAVE_AESGCM
-  #define WOLFSSL_AES_128
-  #define HAVE_AES_CBC
-  #define WOLFSSL_SHA512
-
-  #define HAVE_TLS_EXTENSIONS
-  #define HAVE_SUPPORTED_CURVES
-  #define HAVE_ECC
-  #define HAVE_CURVE25519
-  #define CURVE25519_SMALL
-  #define HAVE_ED25519
-
-  #define WC_RSA_BLINDING
-  #define ECC_TIMING_RESISTANT
-  #define TFM_TIMING_RESISTANT
-
-
-/*-- Debugging options  ------------------------------------------------------
- *
- * "DEBUG_WOLFSSL" definition enables log to output into stdout.
- * Note: wolfSSL_Debugging_ON() must be called just after wolfSSL_Init().
- *----------------------------------------------------------------------------*/
-
-/*#define DEBUG_WOLFSSL*/
-
-/* The TCP port used by both the secure client and the secure server. */
-#define configTCP_PORT_NUMBER	5001
+#define configECHO_SERVER_ADDR0 172
+#define configECHO_SERVER_ADDR1 19
+#define configECHO_SERVER_ADDR2 195
+#define configECHO_SERVER_ADDR3 36
 
 #endif /* ifndef USER_SETTINGS_H_ */
