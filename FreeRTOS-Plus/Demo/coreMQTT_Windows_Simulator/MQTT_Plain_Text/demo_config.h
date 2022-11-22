@@ -89,12 +89,15 @@ extern void vLoggingPrintf( const char * pcFormatString,
  * #define democonfigMQTT_BROKER_ENDPOINT				"insert here."
  */
 
+#define democonfigMQTT_BROKER_ENDPOINT "aux.freertos.iot.aws.dev"
 
 /**
  * @brief The port to use for the demo.
  *
  * #define democonfigMQTT_BROKER_PORT					( insert here. )
  */
+
+#define democonfigMQTT_BROKER_PORT ( 1883 )
 
 
 /**
