@@ -45,7 +45,7 @@ jobs:
 
           # Run the release script
           pip install -r ./tools/.github/scripts/release-requirements.txt
-          ./tools/.github/scripts/release.py FreeRTOS --core-repo-path=local_core --core-commit=${{ github.event.inputs.commit_id }} --new-core-version=${{ github.event.inputs.version_number }}
+          ./tools/.github/scripts/release.py jasonpcarroll --core-repo-path=local_core --core-commit=${{ github.event.inputs.commit_id }} --new-core-version=${{ github.event.inputs.version_number }}
           exit $?
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
