@@ -49,6 +49,11 @@ jobs:
           make --version
           make
 
+      - name: Run WIN32-MingW Demo
+        working-directory: FreeRTOS/Demo/WIN32-MingW
+        shell: cmd
+        run: build/RTOSDemo.exe
+
   POSIX-GCC:
     name: Native GCC
     runs-on: ubuntu-latest
