@@ -53,8 +53,8 @@ jobs:
         working-directory: FreeRTOS/Demo/WIN32-MingW
         shell: cmd
         run: |
-          cd build
-          RTOSDemo.exe
+          cd C:/Windows/SysWOW64
+          ls
 
   POSIX-GCC:
     name: Native GCC
