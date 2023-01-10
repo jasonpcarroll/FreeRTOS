@@ -50,10 +50,9 @@ jobs:
           make
 
       - name: Run WIN32-MingW Demo
-        working-directory: FreeRTOS/Demo/WIN32-MingW
+        working-directory: C:/Windows/SysWOW64
         shell: cmd
-        run: |
-          cd C:/Windows/SysWOW64 && ls
+        run: ls
 
   POSIX-GCC:
     name: Native GCC
