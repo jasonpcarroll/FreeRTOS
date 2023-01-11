@@ -232,7 +232,6 @@ jobs:
 
       - name: Install WinPCap
         working-directory: .github/scripts
-        shell: cmd
         run: ahk-v2/AutoHotkey64.exe winpcap-installer.ahk WinPcap_4_1_3.exe
 
       - name: Build MQTT Basic TLS Demo
