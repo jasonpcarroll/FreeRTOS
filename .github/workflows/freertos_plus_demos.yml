@@ -220,7 +220,7 @@ jobs:
       - name: Install WinPCap
         working-directory: .github/scripts
         run: |
-          wget https://www.winpcap.org/install/bin/WinPcap_4_1_3.exe
+          curl https://www.winpcap.org/install/bin/WinPcap_4_1_3.exe
           autohotkey winpcap-installer.ahk WinPcap_4_1_3.exe
 
       - name: Build MQTT Basic TLS Demo
