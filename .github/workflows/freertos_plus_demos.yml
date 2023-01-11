@@ -223,6 +223,13 @@ jobs:
           curl -o WinPcap_4_1_3.exe https://www.winpcap.org/install/bin/WinPcap_4_1_3.exe
           ls
 
+      - name: Download and extract AutoHotKey
+        working-directory: .github/scripts
+        run: |
+          curl -o ahk-v2.zip https://www.autohotkey.com/download/ahk-v2.zip
+          ls
+          7z x ahk-v2.zip -o ahk-v2
+
       - name: Install WinPCap
         working-directory: .github/scripts
         shell: cmd
