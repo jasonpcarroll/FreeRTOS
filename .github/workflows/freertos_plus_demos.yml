@@ -228,12 +228,12 @@ jobs:
         run: |
           curl -o ahk-v2.zip https://www.autohotkey.com/download/ahk-v2.zip
           ls
-          7z x ahk-v2.zip -o ahk-v2
+          7z x ahk-v2.zip -oahk-v2
 
       - name: Install WinPCap
         working-directory: .github/scripts
         shell: cmd
-        run: autohotkey winpcap-installer.ahk WinPcap_4_1_3.exe
+        run: ahk-v2/AutoHotkey64.exe winpcap-installer.ahk WinPcap_4_1_3.exe
 
       - name: Build MQTT Basic TLS Demo
         working-directory: FreeRTOS-Plus/Demo/coreMQTT_Windows_Simulator/MQTT_Basic_TLS
