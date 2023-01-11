@@ -217,9 +217,17 @@ jobs:
           echo '    #define democonfigUSE_AWS_IOT_CORE_BROKER ( 1U )' | tee -a */demo_config.h
           echo '#endif /* DEMO_CONFIG_H_TEST_BUILD */' | tee -a */demo_config.h
 
+      - name: Install WinPCap
+        run: choco install winpcap
+
       - name: Build MQTT Basic TLS Demo
         working-directory: FreeRTOS-Plus/Demo/coreMQTT_Windows_Simulator/MQTT_Basic_TLS
         run: msbuild mqtt_basic_tls_demo.sln -t:rebuild -property:Configuration=Debug -m
+
+      - name: Run MQTT Basic TLS Demo
+        working-directory: FreeRTOS-Plus/Demo/coreMQTT_Windows_Simulator/MQTT_Basic_TLS/Debug
+        shell: cmd
+        run: MQTT_Basic_TLS.exe
 
       - name: Build MQTT Keep Alive Demo
         working-directory: FreeRTOS-Plus/Demo/coreMQTT_Windows_Simulator/MQTT_Keep_Alive
