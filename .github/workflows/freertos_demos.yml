@@ -49,24 +49,6 @@ jobs:
           make --version
           make
 
-      - name: Find DLLs in C:/
-        working-directory: C:/
-        shell: cmd
-        run: |
-          dir /s wpcap.dll
-          dir /s VCRUNTIME140D.dll
-          dir /s ucrtbased.dll
-          dir /s ADVAPI32.dll
-
-      - name: Find DLLs in D:/
-        working-directory: D:/
-        shell: cmd
-        run: |
-          dir /s wpcap.dll
-          dir /s VCRUNTIME140D.dll
-          dir /s ucrtbased.dll
-          dir /s ADVAPI32.dll
-
   POSIX-GCC:
     name: Native GCC
     runs-on: ubuntu-latest

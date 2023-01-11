@@ -218,7 +218,10 @@ jobs:
           echo '#endif /* DEMO_CONFIG_H_TEST_BUILD */' | tee -a */demo_config.h
 
       - name: Install WinPCap
-        run: choco install winpcap
+        working-directory: .github/scripts
+        run: |
+          wget https://www.winpcap.org/install/bin/WinPcap_4_1_3.exe
+          autohotkey winpcap-installer.ahk WinPcap_4_1_3.exe
 
       - name: Build MQTT Basic TLS Demo
         working-directory: FreeRTOS-Plus/Demo/coreMQTT_Windows_Simulator/MQTT_Basic_TLS
