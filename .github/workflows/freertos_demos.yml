@@ -49,10 +49,23 @@ jobs:
           make --version
           make
 
-      - name: Run WIN32-MingW Demo
-        working-directory: C:/Windows/SysWOW64
+      - name: Find DLLs in C:/
+        working-directory: C:/
         shell: cmd
-        run: ls
+        run: |
+          dir /s wpcap.dll
+          dir /s VCRUNTIME140D.dll
+          dir /s ucrtbased.dll
+          dir /s ADVAPI32.dll
+
+      - name: Find DLLs in D:/
+        working-directory: D:/
+        shell: cmd
+        run: |
+          dir /s wpcap.dll
+          dir /s VCRUNTIME140D.dll
+          dir /s ucrtbased.dll
+          dir /s ADVAPI32.dll
 
   POSIX-GCC:
     name: Native GCC
