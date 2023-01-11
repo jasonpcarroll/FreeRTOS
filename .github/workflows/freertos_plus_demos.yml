@@ -219,8 +219,9 @@ jobs:
 
       - name: Download WinPCap
         working-directory: .github/scripts
+        shell: bash
         run: |
-          curl https://www.winpcap.org/install/bin/WinPcap_4_1_3.exe
+          wget https://www.winpcap.org/install/bin/WinPcap_4_1_3.exe
           ls
 
       - name: Install WinPCap
