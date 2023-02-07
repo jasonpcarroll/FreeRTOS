@@ -29,7 +29,7 @@
   * @brief Code signature verification using mbedtls crypto.
   *
   * The file demonstrates implements the code signature verification functionality on 
-  * the specified file using mbedtls for SHA256 ECDSA.
+  * the specified file using mbedtls for SHA384 ECDSA.
   */
 
  /* C runtime includes. */
@@ -45,6 +45,7 @@
 #include MBEDTLS_CONFIG_FILE
 #endif
 #include "mbedtls/platform.h"
+#include "mbedtls/sha512.h"
 #include "mbedtls/sha256.h"
 #include "mbedtls/sha1.h"
 #include "mbedtls/pk.h"
@@ -62,6 +63,11 @@
  */
 #define SHA256_DIGEST_BYTES    32
 
+ /**
+  * @brief SHA384 buffer size for storing cryptographic hash computation results.
+  */
+#define SHA384_DIGEST_BYTES    48
+
  /* Size of buffer used in file operations on this platform (Windows). */
 #define OTA_PAL_WIN_BUF_SIZE ( ( size_t ) 4096UL )
 
@@ -70,6 +76,7 @@
  */
 #define HASH_ALGORITHM_SHA1           1
 #define HASH_ALGORITHM_SHA256         2
+#define HASH_ALGORITHM_SHA384         3
 #define ASYMMETRIC_ALGORITHM_RSA      1
 #define ASYMMETRIC_ALGORITHM_ECDSA    2
 
@@ -80,7 +87,7 @@ typedef struct SignatureVerificationState
 {
     BaseType_t xAsymmetricAlgorithm;
     BaseType_t xHashAlgorithm;
-    mbedtls_sha256_context xSHA256Context;
+    mbedtls_sha512_context xSHA512Context;
 } SignatureVerificationState_t, * SignatureVerificationStatePtr_t;
 
 /**
@@ -236,7 +243,7 @@ static BaseType_t prvVerifySignature(char* pcSignerCertificate,
 {
     BaseType_t xResult = pdTRUE;
     mbedtls_x509_crt xCertCtx;
-    mbedtls_md_type_t xMbedHashAlg = MBEDTLS_MD_SHA256;
+    mbedtls_md_type_t xMbedHashAlg = MBEDTLS_MD_SHA384;
 
     (void)xHashAlgorithm;
 
@@ -312,8 +319,10 @@ static BaseType_t prvSignatureVerificationStart(void** ppvContext,
         /*
          * Initialize the requested hash type
          */
-        mbedtls_sha256_init(&pxCtx->xSHA256Context);
-        (void)mbedtls_sha256_starts(&pxCtx->xSHA256Context, 0);
+        mbedtls_sha512_init(&pxCtx->xSHA512Context);
+
+        /* For SHA384 you need to set the second argument to 1 for the following function. */
+        (void)mbedtls_sha512_starts(&pxCtx->xSHA512Context, 1);
     }
 
     return xResult;
@@ -331,7 +340,7 @@ static void prvSignatureVerificationUpdate(void* pvContext,
     /*
      * Add the data to the hash of the requested type
      */
-    (void)mbedtls_sha256_update(&pxCtx->xSHA256Context, pucData, xDataLength);
+    (void)mbedtls_sha512_update(&pxCtx->xSHA512Context, pucData, xDataLength);
 
 }
 
@@ -349,7 +358,7 @@ static BaseType_t prvSignatureVerificationFinal(void* pvContext,
     if (pvContext != NULL)
     {
         SignatureVerificationStatePtr_t pxCtx = (SignatureVerificationStatePtr_t)pvContext; /*lint !e9087 Allow casting void* to other types. */
-        uint8_t ucSHA256[SHA256_DIGEST_BYTES];                                      /* Reserve enough space for the larger for SHA256 results. */
+        uint8_t ucSHA384[SHA384_DIGEST_BYTES];                                      /* Reserve enough space for SHA384 results. */
         uint8_t* pucHash = NULL;
         size_t xHashLength = 0;
 
@@ -361,9 +370,9 @@ static BaseType_t prvSignatureVerificationFinal(void* pvContext,
             /*
              * Finish the hash.
              */
-            (void)mbedtls_sha256_finish(&pxCtx->xSHA256Context, ucSHA256);
-            pucHash = ucSHA256;
-            xHashLength = SHA256_DIGEST_BYTES;
+            (void)mbedtls_sha512_finish(&pxCtx->xSHA512Context, ucSHA384);
+            pucHash = ucSHA384;
+            xHashLength = SHA384_DIGEST_BYTES;
 
             /*
              * Verify the signature.
@@ -399,8 +408,8 @@ OtaPalMainStatus_t xValidateImageSignature(OtaFileContext_t* const C)
     uint8_t* pucBuf, * pucSignerCert;
     void* pvSigVerifyContext;
 
-        /* Verify an ECDSA-SHA256 signature. */
-        if (pdFALSE == prvSignatureVerificationStart(&pvSigVerifyContext, ASYMMETRIC_ALGORITHM_ECDSA, HASH_ALGORITHM_SHA256))
+        /* Verify an ECDSA-SHA384 signature. */
+        if (pdFALSE == prvSignatureVerificationStart(&pvSigVerifyContext, ASYMMETRIC_ALGORITHM_ECDSA, HASH_ALGORITHM_SHA384))
         {
             eResult = OtaPalSignatureCheckFailed;
         }

@@ -46,7 +46,7 @@
 #include "code_signature_verification.h"
 
 /* Specify the OTA signature algorithm we support on this platform. */
-const char OTA_JsonFileSignatureKey[ OTA_FILE_SIG_KEY_STR_MAX_LENGTH ] = "sig-sha256-ecdsa";
+const char OTA_JsonFileSignatureKey[ OTA_FILE_SIG_KEY_STR_MAX_LENGTH ] = "sig-sha1-rsa";
 
 static OtaPalMainStatus_t otaPal_CheckFileSignature( OtaFileContext_t * const C );
 
