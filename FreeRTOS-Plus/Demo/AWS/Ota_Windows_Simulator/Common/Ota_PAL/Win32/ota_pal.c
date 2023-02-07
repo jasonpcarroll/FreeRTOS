@@ -46,6 +46,9 @@
 #include "code_signature_verification.h"
 
 /* Specify the OTA signature algorithm we support on this platform. */
+/* NOTE: This ONLY needs to correlate with the settings used in the OTA File configuration.
+ * I swapped to "sig-sha1-rsa" just for example which corresponds to SHA1 and RSA settings.
+ * This demo will only work for a SHA-384 signature. */
 const char OTA_JsonFileSignatureKey[ OTA_FILE_SIG_KEY_STR_MAX_LENGTH ] = "sig-sha1-rsa";
 
 static OtaPalMainStatus_t otaPal_CheckFileSignature( OtaFileContext_t * const C );
