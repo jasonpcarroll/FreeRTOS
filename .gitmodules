@@ -76,3 +76,6 @@
 [submodule "FreeRTOS-Plus/Source/FreeRTOS-Cellular-Modules/sara-r4"]
 	path = FreeRTOS-Plus/Source/FreeRTOS-Cellular-Modules/sara-r4
 	url = https://github.com/FreeRTOS/Lab-FreeRTOS-Cellular-Interface-Reference-ublox-SARA-R4.git
+[submodule "FreeRTOS-Plus/ThirdParty/libslirp"]
+	path = FreeRTOS-Plus/ThirdParty/libslirp
+	url = https://gitlab.freedesktop.org/slirp/libslirp.git
