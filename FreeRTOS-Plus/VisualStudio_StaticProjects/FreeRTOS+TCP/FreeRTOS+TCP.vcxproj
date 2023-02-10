@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugWinPCapBackend|Win32">
+      <Configuration>DebugWinPCapBackend</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugWinPCapBackend|x64">
+      <Configuration>DebugWinPCapBackend</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -31,12 +39,22 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
@@ -54,10 +72,16 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -71,6 +95,16 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PublicIncludeDirectories>..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;.\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
+    <OutDir>build\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);..\..\ThirdParty\winpcap\lib\x64</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <PublicModuleDirectories>..\..\Source\FreeRTOS-Plus-TCP\source;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;.\</PublicModuleDirectories>
+    <SourcePath>..\..\Source\FreeRTOS-Plus-TCP\source;..\..\Source\FreeRTOS-Plus-TCP\tools;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">
     <PublicIncludeDirectories>..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;.\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
     <OutDir>build\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
@@ -100,6 +134,16 @@
     <PublicModuleDirectories>..\..\Source\FreeRTOS-Plus-TCP\source;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;.\</PublicModuleDirectories>
     <SourcePath>..\..\Source\FreeRTOS-Plus-TCP\source;..\..\Source\FreeRTOS-Plus-TCP\tools;$(SourcePath)</SourcePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">
+    <PublicIncludeDirectories>..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;.\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
+    <OutDir>build\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);..\..\ThirdParty\winpcap\lib\x86</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <PublicModuleDirectories>..\..\Source\FreeRTOS-Plus-TCP\source;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;.\</PublicModuleDirectories>
+    <SourcePath>..\..\Source\FreeRTOS-Plus-TCP\source;..\..\Source\FreeRTOS-Plus-TCP\tools;$(SourcePath)</SourcePath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PublicIncludeDirectories>..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;.\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
@@ -115,12 +159,30 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILDING_LIBSLIRP;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\ThirdParty\winpcap\include;..\..\ThirdParty\winpcap\include\pcap;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\ThirdParty\glib\include;..\..\ThirdParty\libslirp\src;..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\ThirdParty\winpcap\include;..\..\ThirdParty\winpcap\include\pcap;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>wpcap.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>BUILDING_LIBSLIRP;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\ThirdParty\glib\include;..\..\ThirdParty\libslirp\src;..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\ThirdParty\winpcap\include;..\..\ThirdParty\winpcap\include\pcap;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -133,11 +195,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BUILDING_LIBSLIRP;_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\ThirdParty\winpcap\include;..\..\ThirdParty\winpcap\include\pcap;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\ThirdParty\glib\include;..\..\ThirdParty\libslirp\src;..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\ThirdParty\winpcap\include;..\..\ThirdParty\winpcap\include\pcap;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -153,8 +215,18 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile />
     <ClCompile>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\ThirdParty\winpcap\include;..\..\ThirdParty\winpcap\include\pcap;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>BUILDING_LIBSLIRP;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\ThirdParty\glib\include;..\..\ThirdParty\libslirp\src;..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\ThirdParty\winpcap\include;..\..\ThirdParty\winpcap\include\pcap;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>wpcap.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">
+    <ClCompile />
+    <ClCompile>
+      <PreprocessorDefinitions>BUILDING_LIBSLIRP;_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\ThirdParty\glib\include;..\..\ThirdParty\libslirp\src;..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\ThirdParty\winpcap\include;..\..\ThirdParty\winpcap\include\pcap;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>wpcap.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -162,8 +234,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\ThirdParty\winpcap\include;..\..\ThirdParty\winpcap\include\pcap;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>BUILDING_LIBSLIRP;_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\ThirdParty\glib\include;..\..\ThirdParty\libslirp\src;..\..\Source\FreeRTOS-Plus-TCP\source\include;..\..\Source\FreeRTOS-Plus-TCP\source\portable\Compiler\MSVC;..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include;..\..\ThirdParty\winpcap\include;..\..\ThirdParty\winpcap\include\pcap;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>wpcap.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -195,7 +267,212 @@
     <ClCompile Include="..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\tcp_dump_packets.c" />
     <ClCompile Include="..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\tcp_mem_stats.c" />
     <ClCompile Include="..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\tcp_netstat.c" />
-    <ClCompile Include="NetworkInterface_WinPCap.c" />
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\arp_table.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\bootp.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\cksum.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\dhcpv6.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\dnssearch.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\if.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\ip6_icmp.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\ip6_input.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\ip6_output.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\ip_icmp.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\ip_input.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\ip_output.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\mbuf.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\misc.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\ncsi.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\ndp_table.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\sbuf.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\slirp.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\socket.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\state.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\stream.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\tcp_input.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\tcp_output.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\tcp_subr.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\tcp_timer.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\tftp.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\udp.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\udp6.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\util.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\version.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\ThirdParty\libslirp\src\vmstate.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="MBuffNetifBackendLibslirp.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="MBuffNetworkInterface.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="NetworkInterface_WinPCap.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="plus_tcp_hooks_winsim.c" />
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +508,115 @@
     <ClInclude Include="..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include\tcp_dump_packets.h" />
     <ClInclude Include="..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include\tcp_mem_stats.h" />
     <ClInclude Include="..\..\Source\FreeRTOS-Plus-TCP\tools\tcp_utilities\include\tcp_netstat.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glibconfig.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\galloca.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\garray.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gasyncqueue.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gatomic.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gbacktrace.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gbase64.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gbitlock.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gbookmarkfile.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gbytes.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gcharset.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gchecksum.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gconvert.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gdataset.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gdate.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gdatetime.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gdir.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\genviron.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gerror.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gfileutils.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\ggettext.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\ghash.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\ghmac.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\ghook.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\ghostutils.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gi18n-lib.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gi18n.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\giochannel.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gkeyfile.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\glib-autocleanups.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\glib-typeof.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\glib-visibility.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\glist.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gmacros.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gmain.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gmappedfile.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gmarkup.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gmem.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gmessages.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gnode.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\goption.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gpattern.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gpoll.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gprimes.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gprintf.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gqsort.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gquark.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gqueue.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\grand.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\grcbox.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\grefcount.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\grefstring.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gregex.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gscanner.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gsequence.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gshell.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gslice.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gslist.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gspawn.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gstdio.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gstrfuncs.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gstring.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gstringchunk.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gstrvbuilder.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gtestutils.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gthread.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gthreadpool.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gtimer.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gtimezone.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gtrashstack.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gtree.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gtypes.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gunicode.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\guri.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gutils.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\guuid.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gvariant.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gvarianttype.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gversion.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gversionmacros.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\glib\gwin32.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\libintl.h" />
+    <ClInclude Include="..\..\ThirdParty\glib\include\pcre2.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\bootp.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\debug.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\dhcpv6.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\if.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\ip.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\ip6.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\ip6_icmp.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\ip_icmp.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\libslirp.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\main.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\mbuf.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\misc.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\ncsi-pkt.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\sbuf.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\slirp.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\socket.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\stream.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\tcp.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\tcpip.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\tcp_timer.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\tcp_var.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\tftp.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\udp.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\util.h" />
+    <ClInclude Include="..\..\ThirdParty\libslirp\src\vmstate.h" />
     <ClInclude Include="..\..\ThirdParty\winpcap\include\bittypes.h" />
     <ClInclude Include="..\..\ThirdParty\winpcap\include\ip6_misc.h" />
     <ClInclude Include="..\..\ThirdParty\winpcap\include\Packet32.h" />
@@ -256,6 +642,32 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\ThirdParty\glib\x86\libglib-2.0.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Library>
+    <Library Include="..\..\ThirdParty\glib\x86\libintl.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </Library>
+    <Library Include="..\..\ThirdParty\glib\x86\libpcre2-8.lib">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugWinPCapBackend|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+    </Library>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
