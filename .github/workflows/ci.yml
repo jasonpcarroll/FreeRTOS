@@ -82,8 +82,6 @@ jobs:
           # List of directories containing libraries whose doxygen output will be generated.
           libs_parent_dir_path: FreeRTOS-Plus/Source,FreeRTOS-Plus/Source/AWS,FreeRTOS-Plus/Source/Application-Protocols,FreeRTOS-Plus/Source/Utilities
           generate_zip: true
-          doxygen_link: "https://sourceforge.net/projects/doxygen/files/rel-1.9.2/doxygen-1.9.2.linux.bin.tar.gz"
-          doxygen_dependencies: libclang-9-dev libclang-cpp9 graphviz
       - name: Upload doxygen artifact if main branch
         if: success() && ( github.ref == 'refs/heads/main' || github.ref == 'refs/heads/release-candidate' )
         env:
@@ -172,7 +170,17 @@ jobs:
           path: ./freertos_lts_memory_estimates.json
           retention-days: 2
 
-
-
-
-
+  proof_ci:
+    runs-on: cbmc_ubuntu-latest_16-core
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          git submodule update --init --checkout --recursive --depth 1
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends gcc-multilib
+      - name: Set up CBMC runner
+        uses: FreeRTOS/CI-CD-Github-Actions/set_up_cbmc_runner@main
+      - name: Run CBMC
+        uses: FreeRTOS/CI-CD-Github-Actions/run_cbmc@main
+        with:
+          proofs_dir: FreeRTOS/Test/CBMC/proofs
